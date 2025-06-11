@@ -2,7 +2,7 @@
     <form class="column align-center" id="signup-form" #form="ngForm" (ngSubmit)="onSubmit(form)">
         <mat-form-field>
             <mat-label>Full Name</mat-label>
-            <input type="fName" matInput name="fName" ngModel required #fNameInput="ngModel">
+            <input type="text" matInput name="fName" ngModel required #fNameInput="ngModel">
             @if (fNameInput.hasError('required')) {
             <mat-error>Field Must not be empty</mat-error>
             }

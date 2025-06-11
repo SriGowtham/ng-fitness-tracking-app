@@ -1,0 +1,45 @@
+mat-sidenav-container, mat-sidenav-content ,  mat-sidenav {
+    height: 100%;
+}
+
+mat-sidenav {
+    width: 200px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 16px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+a:hover , a:active {
+  color: lightgray;
+}
+.nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  vertical-align: middle;
+}
+
+@media (min-width:768px) {
+    .side-nav {
+        display: none;
+    }
+}
+
+@media (max-width:767.98px) {
+    .nav-links {
+        display: none;
+    }
+}
