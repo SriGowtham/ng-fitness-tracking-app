@@ -1,29 +1,9 @@
 <mat-sidenav-container>
   <mat-sidenav #SideNav role="navigation">
-     <mat-nav-list>
-      <a mat-list-item routerLink="/signup" (click)="SideNav.close()">Signup</a>
-      <a mat-list-item routerLink="/login" (click)="SideNav.close()">Login</a>
-      <a mat-list-item routerLink="/training" (click)="SideNav.close()">Training</a>
-     <mat-list-item>
-        <button mat-button (click)="SideNav.close()">Logout</button>
-     </mat-list-item>
-    </mat-nav-list>
+   <app-sidenav-list (sideNavClose)="SideNav.close()"></app-sidenav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
-        <div class="side-nav">
-            <button matIconButton (click)="SideNav.toggle()" ass="example-icon" aria-label="Example icon-button with menu icon">
-             <mat-icon >menu</mat-icon>
-          </button>
-        </div>
-      <div><a routerLink="/">Fitness App</a></div>
-      <span class="spacer"></span>
-       <div class="nav-links">
-        <a routerLink="/signup">Signup</a>
-        <a routerLink="/login">Login</a>
-        <a routerLink="/training">Training</a>
-       </div>
-     </mat-toolbar>
+    <app-header (sideNavtoggle)="SideNav.toggle()"></app-header>
      <main>
          <router-outlet></router-outlet>
      </main>

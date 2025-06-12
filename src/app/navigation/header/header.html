@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+    <div class="side-nav">
+        <button matIconButton (click)="onToggle()" ass="example-icon"
+            aria-label="Example icon-button with menu icon">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <div><a routerLink="/">Fitness App</a></div>
+    <span class="spacer"></span>
+    <div class="nav-links">
+        <a routerLink="/signup">Signup</a>
+        <a routerLink="/login">Login</a>
+        <a routerLink="/training">Training</a>
+        <a>Logout</a>
+    </div>
+</mat-toolbar>
