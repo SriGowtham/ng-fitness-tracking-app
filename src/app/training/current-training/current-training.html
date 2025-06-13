@@ -1,1 +1,6 @@
-<p>current-training works!</p>
+<section class="column align-center">
+    <mat-progress-spinner mode="determinate" [value]="progress"></mat-progress-spinner>
+    <h1>{{progress}}%</h1>
+    <p>Dont stop till you get enough!!</p>
+    <button mat-raised-button color="primary" (click)="onClick()">Stop</button>
+</section>

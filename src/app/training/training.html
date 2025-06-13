@@ -1,8 +1,12 @@
-<mat-tab-group>
-  <mat-tab label="New Exercise">
-    <app-new-training></app-new-training>
-  </mat-tab>
-  <mat-tab label="Past Exercise">
-    <app-past-training></app-past-training>
-  </mat-tab>
-</mat-tab-group>
+@if (!currentTraining) {
+  <mat-tab-group>
+    <mat-tab label="New Exercise">
+      <app-new-training (trainingStart)="currentTraining = true"></app-new-training>
+    </mat-tab>
+    <mat-tab label="Past Exercise">
+      <app-past-training></app-past-training>
+    </mat-tab>
+  </mat-tab-group>
+} @else {
+  <app-current-training></app-current-training>
+}
