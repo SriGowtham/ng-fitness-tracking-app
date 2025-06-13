@@ -1,17 +1,19 @@
 <mat-card>
+  <form #form="ngForm">
     <mat-card-title>Time to start a workout!</mat-card-title>
     <mat-card-content>
         Select type of training
     </mat-card-content>
-    <mat-form-field>
+    <mat-form-field >
         <mat-label>Select</mat-label>
-        <mat-select>
+        <mat-select name="select" #select required ngModel>
             <mat-option value="crunches">Crunches</mat-option>
             <mat-option value="touch-toes">Touch Toes</mat-option>
             <mat-option value="side-lunges">Side Lunges</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-card-actions>
-        <button mat-raised-button type="submit" color="primary" (click)="OnTrainingStart()">Start</button>
+        <button mat-raised-button type="submit" color="primary" (click)="OnTrainingStart()" [disabled]="form.invalid">Start</button>
     </mat-card-actions>
+  </form>
 </mat-card>

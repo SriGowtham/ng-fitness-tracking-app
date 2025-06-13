@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -14,8 +14,13 @@ export class CurrentTrainingComponent implements OnInit {
   progress: number = 0;
   currentTraining: number = 0;
   private dialog = inject(MatDialog)
+  @Output() trainingComplete = new EventEmitter()
 
   ngOnInit() {
+    this.startOrResumeTimer()
+  }
+
+  startOrResumeTimer(){
     this.currentTraining = setInterval(() => {
       this.progress += 2;
       if (this.progress >= 100) {
@@ -26,6 +31,17 @@ export class CurrentTrainingComponent implements OnInit {
 
   onClick(){
     clearInterval(this.currentTraining)
-    this.dialog.open(StopTrainingComponent)
+    const dialogRef = this.dialog.open(StopTrainingComponent , {
+      data : { progress: this.progress }
+    })
+
+    dialogRef.afterClosed().subscribe((result) => {
+     console.log(result)
+     if(result){
+       this.trainingComplete.emit()
+     } else{
+      this.startOrResumeTimer()
+     }
+    })
   }
 }

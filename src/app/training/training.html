@@ -8,5 +8,5 @@
     </mat-tab>
   </mat-tab-group>
 } @else {
-  <app-current-training></app-current-training>
+  <app-current-training (trainingComplete)="currentTraining = false"></app-current-training>
 }
