@@ -1,4 +1,4 @@
-import { Component, DestroyRef, EventEmitter, inject, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLink } from '@angular/router';
@@ -11,7 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './sidenav-list.html',
   styleUrl: './sidenav-list.css'
 })
-export class SidenavList {
+export class SidenavList implements OnInit{
   isAuth: boolean = false;
   private authService = inject(AuthService)
   private destroyRef = inject(DestroyRef)

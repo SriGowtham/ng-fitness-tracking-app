@@ -1,4 +1,4 @@
-import { Component, DestroyRef, EventEmitter, inject, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -11,7 +11,7 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
-export class Header {
+export class Header implements OnInit{
   isAuth : boolean = false;
   private authService = inject(AuthService)
   private destroyRef = inject(DestroyRef)
