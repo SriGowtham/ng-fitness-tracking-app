@@ -61,9 +61,9 @@ export class TrainingService {
     this.excercises.push({
       ...this.currentExercise,
       duration: this.currentExercise.duration * (progress / 100),
-      calories: this.currentExercise.duration * (progress / 100),
+      calories: this.currentExercise.calories * (progress / 100),
       date: new Date(),
-      state: 'closed',
+      state: 'cancelled',
     });
     this.currentExercise = null;
     this.excerciseChanged.next(null);

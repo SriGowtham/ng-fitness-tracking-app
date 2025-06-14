@@ -4,5 +4,5 @@ export interface Training {
     duration: number,
     calories: number,
     date?: Date,
-    state?: 'completed' | 'closed' | null
+    state?: 'completed' | 'cancelled' | null
 }
