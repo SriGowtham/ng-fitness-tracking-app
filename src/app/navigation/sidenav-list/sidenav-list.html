@@ -1,8 +1,10 @@
 <mat-nav-list>
+    @if (!isAuth) {
     <a mat-list-item routerLink="/signup" (click)="onClose()">Signup</a>
     <a mat-list-item routerLink="/login" (click)="onClose()">Login</a>
-    <a mat-list-item routerLink="/training" (click)="onClose()">Training</a>
-    <mat-list-item>
-        <button mat-button (click)="onClose()">Logout</button>
-    </mat-list-item>
+    }
+    @else {
+        <a mat-list-item routerLink="/training" (click)="onClose()">Training</a>
+        <a mat-list-item routerLink="/" (click)="onClose()" >Logout</a>
+    }
 </mat-nav-list>

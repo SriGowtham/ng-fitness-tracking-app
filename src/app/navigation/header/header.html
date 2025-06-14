@@ -1,16 +1,18 @@
 <mat-toolbar color="primary">
     <div class="side-nav">
-        <button matIconButton (click)="onToggle()" ass="example-icon"
-            aria-label="Example icon-button with menu icon">
+        <button matIconButton (click)="onToggle()" ass="example-icon" aria-label="Example icon-button with menu icon">
             <mat-icon>menu</mat-icon>
         </button>
     </div>
     <div><a routerLink="/">Fitness App</a></div>
     <span class="spacer"></span>
     <div class="nav-links">
+        @if (!isAuth) {
         <a routerLink="/signup">Signup</a>
         <a routerLink="/login">Login</a>
-        <a routerLink="/training">Training</a>
-        <a>Logout</a>
+        } @else {
+            <a routerLink="/training">Training</a>
+            <a  (click)="onLogout()" routerLink="/">Logout</a>
+        }
     </div>
 </mat-toolbar>
