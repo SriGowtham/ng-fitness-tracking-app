@@ -13,10 +13,10 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  private user: User;
   private router = inject(Router);
   private fireAuth = inject(Auth);
   authDone = new Subject<boolean>();
+  private authSucessfull : boolean
   constructor() {}
 
   userRegister(authData: AuthData) {
@@ -43,20 +43,17 @@ export class AuthService {
       });
   }
 
-  getUser() {
-    return { ...this.user };
-  }
-
   logout() {
-    this.user = null;
+    this.authSucessfull = null
     this.authDone.next(false);
   }
 
   isAuth() {
-    return this.user != null;
+    return this.authSucessfull
   }
 
   private authSuccessful() {
+    this.authSucessfull = true
     this.authDone.next(true);
     this.router.navigate(['/training']);
   }
