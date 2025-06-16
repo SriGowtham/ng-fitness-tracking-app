@@ -1,13 +1,14 @@
 import { inject, Injectable } from '@angular/core';
-import { User } from './modal/user.modal';
 import { AuthData } from './modal/auth-data.modal';
-import { Subject, throwError } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import {
   Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from '@angular/fire/auth';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ import {
 export class AuthService {
   private router = inject(Router);
   private fireAuth = inject(Auth);
+  private snackBar = inject(MatSnackBar)
   authDone = new Subject<boolean>();
   private authSucessfull : boolean
   constructor() {}
@@ -29,7 +31,9 @@ export class AuthService {
         this.authSuccessful();
       })
       .catch((error) => {
-        throw new Error(error);
+       this.snackBar.open(error.message, null , {
+        duration: 3000
+       })
       });
   }
 
@@ -39,7 +43,9 @@ export class AuthService {
         this.authSuccessful();
       })
       .catch((error) => {
-        throw new Error(error);
+        this.snackBar.open(error.message, null , {
+        duration: 3000
+       })
       });
   }
 
