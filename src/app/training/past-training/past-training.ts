@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TrainingService } from '../training.service';
@@ -10,7 +10,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-past-training',
-  imports: [MatTableModule, CommonModule, MatSortModule, MatInputModule, MatFormFieldModule , MatPaginatorModule],
+  imports: [MatTableModule, CommonModule, MatSortModule, MatInputModule, MatFormFieldModule , MatPaginatorModule , DatePipe],
   templateUrl: './past-training.html',
   styleUrl: './past-training.css'
 })
@@ -22,7 +22,10 @@ export class PastTrainingComponent implements OnInit, AfterViewInit{
 
  displayedColumns: string[] = ['date', 'name', 'calories', 'duration', 'state'];
  ngOnInit() {
-  this.matTableSource.data = this.trainingService.excercises
+  this.trainingService.fetchCompletedorCancelledExcercises()
+  this.trainingService.finshedExcersisesChanged.subscribe((excersises : Training[]) => {
+     this.matTableSource.data = excersises
+  })
  }
 
  ngAfterViewInit(): void {
