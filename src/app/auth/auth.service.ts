@@ -29,6 +29,7 @@ export class AuthService {
     )
       .then(() => {
         this.authSuccessful();
+        this.router.navigate(['/login']);
       })
       .catch((error) => {
         this.snackBarService.showSnackBar(error, null , 3000)
@@ -39,6 +40,7 @@ export class AuthService {
     signInWithEmailAndPassword(this.fireAuth, authData.email, authData.password)
       .then(() => {
         this.authSuccessful();
+        this.router.navigate(['/training']);
       })
       .catch((error) => {
          this.snackBarService.showSnackBar(error, null , 3000)
@@ -58,6 +60,5 @@ export class AuthService {
   private authSuccessful() {
     this.authSucessfull = true
     this.authDone.next(true);
-    this.router.navigate(['/training']);
   }
 }
