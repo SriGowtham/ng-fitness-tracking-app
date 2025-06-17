@@ -7,7 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from '@angular/fire/auth';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from '../shared/snackbar.service';
 
 
 @Injectable({
@@ -16,9 +16,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AuthService {
   private router = inject(Router);
   private fireAuth = inject(Auth);
-  private snackBar = inject(MatSnackBar)
   authDone = new Subject<boolean>();
-  private authSucessfull : boolean
+  private authSucessfull : boolean;
+  private snackBarService = inject(SnackBarService)
   constructor() {}
 
   userRegister(authData: AuthData) {
@@ -31,10 +31,8 @@ export class AuthService {
         this.authSuccessful();
       })
       .catch((error) => {
-       this.snackBar.open(error.message, null , {
-        duration: 3000
+        this.snackBarService.showSnackBar(error, null , 3000)
        })
-      });
   }
 
   userLogin(authData: AuthData) {
@@ -43,15 +41,14 @@ export class AuthService {
         this.authSuccessful();
       })
       .catch((error) => {
-        this.snackBar.open(error.message, null , {
-        duration: 3000
+         this.snackBarService.showSnackBar(error, null , 3000)
        })
-      });
   }
 
   logout() {
     this.authSucessfull = null
     this.authDone.next(false);
+    this.snackBarService.showSnackBar('Sucessfully Logged out' , null , 2000)
   }
 
   isAuth() {

@@ -8,6 +8,7 @@ import {
   collectionSnapshots,
   Firestore,
 } from '@angular/fire/firestore';
+import { SnackBarService } from '../shared/snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ export class TrainingService {
   availableExcercises: Training[] = [];
 
   private dB = inject(Firestore);
+  private snackBarService = inject(SnackBarService)
 
   fetchAvailableExcercises() {
     return collectionSnapshots(collection(this.dB, 'availableExcercises'))
@@ -32,10 +34,16 @@ export class TrainingService {
           })
         )
       )
-      .subscribe((training: Training[]) => {
+      .subscribe({
+        next: (training: Training[]) => {
         this.availableExcercises = training;
         this.excersisesChanged.next([...this.availableExcercises]);
-      });
+      },
+       error: () => {
+         this.snackBarService.showSnackBar('Failed to fetch exercise values', null, 3000);
+       }
+     });
+
   }
 
   startExcercise(exerciseId: string) {
