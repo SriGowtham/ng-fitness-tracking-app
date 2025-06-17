@@ -5,10 +5,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../auth.service';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { SpinnerService } from '../../shared/spinner.service.ts';
 
 @Component({
   selector: 'app-login',
-    imports: [MatFormFieldModule,MatInputModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatSnackBarModule],
+    imports: [MatFormFieldModule,MatInputModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatSnackBarModule , MatProgressSpinner],
 
   templateUrl: './login.html',
   styleUrl: './login.css'
@@ -16,7 +18,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 export class LoginComponent {
 
-  private authService = inject(AuthService)
+
+ isLoggedIn = false;
+ private authService = inject(AuthService)
+ private spinnerService = inject(SpinnerService)
 
  loginForm = new FormGroup({
   email: new FormControl('' , {validators: [Validators.required, Validators.email]}),
@@ -24,6 +29,9 @@ export class LoginComponent {
  })
 
 onSubmit(form:FormGroup){
+  this.spinnerService.loadingState.subscribe((val) => {
+    this.isLoggedIn = val
+  })
   this.authService.userLogin({
     email: form.value.email,
     password: form.value.password
