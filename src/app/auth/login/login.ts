@@ -13,7 +13,7 @@ import { AuthService } from '../auth.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Store } from '@ngrx/store';
-import * as appReducer from '../../app.reducer'
+import * as fromRoot from '../../app.reducer'
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-login',
@@ -33,7 +33,7 @@ import { Observable } from 'rxjs';
 export class LoginComponent {
   isLoggedIn$: Observable<boolean>;
   private authService = inject(AuthService);
-  private store = inject(Store<{ui : appReducer.State}>)
+  private store = inject(Store<fromRoot.State>)
 
   loginForm = new FormGroup({
     email: new FormControl('', {
@@ -46,7 +46,7 @@ export class LoginComponent {
 
   onSubmit(form: FormGroup) {
    
-    this.isLoggedIn$ = this.store.select(state => state.ui.isLoading)
+    this.isLoggedIn$ = this.store.select(fromRoot.getIsLoading)
     this.authService.userLogin({
       email: form.value.email,
       password: form.value.password,

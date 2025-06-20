@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import * as appReducer from '../../app.reducer'
+import * as fromRoot from '../../app.reducer'
 
 @Component({
   selector: 'app-sign-up',
@@ -30,14 +30,14 @@ import * as appReducer from '../../app.reducer'
 export class SignUpComponent implements OnInit {
   isLoggedIn$ : Observable<boolean>;
   private authService = inject(AuthService);
-  private store = inject(Store<{ui: appReducer.State}>)
+  private store = inject(Store<fromRoot.State>)
   maxDate: any;
   ngOnInit() {
     this.maxDate = new Date();
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
   onSubmit(form: NgForm) {
-    this.isLoggedIn$ = this.store.select(state => state.ui.isLoading)
+    this.isLoggedIn$ = this.store.select(fromRoot.getIsLoading)
     this.authService.userRegister({
       email: form.value.email,
       password: form.value.password,
