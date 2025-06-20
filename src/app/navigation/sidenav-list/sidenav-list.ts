@@ -1,20 +1,23 @@
-import { Component, DestroyRef, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../app.reducer'
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-sidenav-list',
-  imports: [MatListModule, RouterLink, MatSidenavModule],
+  imports: [MatListModule, RouterLink, MatSidenavModule, AsyncPipe],
   templateUrl: './sidenav-list.html',
   styleUrl: './sidenav-list.css'
 })
 export class SidenavList implements OnInit{
-  isAuth: boolean = false;
+  isAuth$ : Observable<boolean>
   private authService = inject(AuthService)
-  private destroyRef = inject(DestroyRef)
+  private store = inject(Store<fromRoot.State>)
   @Output() sideNavClose =  new EventEmitter();
 
   onClose(){
@@ -23,10 +26,6 @@ export class SidenavList implements OnInit{
   }
   
   ngOnInit(): void {
-   this.authService.authDone
-   .pipe(takeUntilDestroyed(this.destroyRef))
-   .subscribe((result) => {
-    this.isAuth = result;
-   })
+   this.isAuth$ = this.store.select(fromRoot.getIsAuth)
   }
 }

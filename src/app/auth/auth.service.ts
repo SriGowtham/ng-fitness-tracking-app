@@ -11,6 +11,7 @@ import { SnackBarService } from '../shared/snackbar.service';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer'
 import * as UI from '../shared/ui.actions'
+import { Authenticated, UnAuthenticated } from './auth.action';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,6 @@ import * as UI from '../shared/ui.actions'
 export class AuthService {
   private router = inject(Router);
   private fireAuth = inject(Auth);
-  authDone = new Subject<boolean>();
-  private authSucessfull : boolean;
   private snackBarService = inject(SnackBarService);
   private store = inject(Store<fromRoot.State>)
   constructor() {}
@@ -58,16 +57,11 @@ export class AuthService {
   }
 
   logout() {
-    this.authSucessfull = null
-    this.authDone.next(false);
+    this.store.dispatch(new UnAuthenticated())
   }
 
-  isAuth() {
-    return this.authSucessfull
-  }
 
   private authSuccessful() {
-    this.authSucessfull = true
-    this.authDone.next(true);
+    this.store.dispatch(new Authenticated())
   }
 }

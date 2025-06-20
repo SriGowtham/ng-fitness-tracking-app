@@ -1,5 +1,5 @@
 <mat-nav-list>
-    @if (!isAuth) {
+    @if (!(isAuth$ | async)) {
     <a mat-list-item routerLink="/signup" (click)="onClose()">Signup</a>
     <a mat-list-item routerLink="/login" (click)="onClose()">Login</a>
     }

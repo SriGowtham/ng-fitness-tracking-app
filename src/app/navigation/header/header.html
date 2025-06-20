@@ -7,7 +7,7 @@
     <div><a routerLink="/">Fitness App</a></div>
     <span class="spacer"></span>
     <div class="nav-links">
-        @if (!isAuth) {
+        @if (!(isAuth$ | async)) {
         <a routerLink="/signup">Signup</a>
         <a routerLink="/login">Login</a>
         } @else {
