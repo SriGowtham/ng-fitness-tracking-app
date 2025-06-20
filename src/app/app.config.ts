@@ -9,6 +9,8 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { environment } from '../environment/environment';
 import { provideAuth } from '@angular/fire/auth';
 import { getAuth } from 'firebase/auth';
+import { provideStore } from '@ngrx/store';
+import { appReducer } from './app.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +20,7 @@ export const appConfig: ApplicationConfig = {
     AuthGuard,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
-    provideAuth(() => getAuth())
+    provideAuth(() => getAuth()),
+    provideStore({ui : appReducer})
   ]
 };

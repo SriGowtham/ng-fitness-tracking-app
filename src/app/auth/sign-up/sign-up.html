@@ -36,7 +36,7 @@
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-checkbox name="agree" required ngModel color="primary">I Agree the terms and conditions</mat-checkbox>
-        @if(!isLoggedIn) {
+        @if(!isLoggedIn$) {
           <button class="margin-sm"mat-raised-button color="primary" [disabled]="form.invalid">Submit</button>
         } @else {
           <mat-spinner></mat-spinner>

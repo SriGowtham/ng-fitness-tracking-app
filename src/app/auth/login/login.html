@@ -10,7 +10,7 @@
             <input type="password" matInput name="password" formControlName="password">
              <mat-error>Enter a valid Password</mat-error>
         </mat-form-field>
-        @if(!isLoggedIn) {
+        @if(!isLoggedIn$) {
           <button class="margin-sm"mat-raised-button color="primary" [disabled]="loginForm.invalid">Submit</button>
         } @else {
           <mat-spinner></mat-spinner>

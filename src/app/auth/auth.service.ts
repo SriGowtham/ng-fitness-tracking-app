@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Inject, inject, Injectable } from '@angular/core';
 import { AuthData } from './modal/auth-data.modal';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -8,9 +8,8 @@ import {
   signInWithEmailAndPassword,
 } from '@angular/fire/auth';
 import { SnackBarService } from '../shared/snackbar.service';
-import { SpinnerService } from '../shared/spinner.service.ts';
-
-
+import { Store } from '@ngrx/store';
+import * as appReducer from '../app.reducer'
 @Injectable({
   providedIn: 'root',
 })
@@ -20,37 +19,38 @@ export class AuthService {
   authDone = new Subject<boolean>();
   private authSucessfull : boolean;
   private snackBarService = inject(SnackBarService);
-  private spinnerService = inject(SpinnerService)
+  private store = inject(Store<{ui: appReducer.State}>)
   constructor() {}
 
   userRegister(authData: AuthData) {
-    this.spinnerService.loadingState.next(true)
+    //this.spinnerService.loadingState.next(true)
+   this.store.dispatch({type : 'START_LOADING'})
     createUserWithEmailAndPassword(
       this.fireAuth,
       authData.email,
       authData.password
     )
       .then(() => {
-        this.spinnerService.loadingState.next(false)
+        this.store.dispatch({type : 'STOP_LOADING'})
         this.authSuccessful();
         this.router.navigate(['/login']);
       })
       .catch((error) => {
-        this.spinnerService.loadingState.next(false)
+        this.store.dispatch({type : 'STOP_LOADING'})
         this.snackBarService.showSnackBar(error, null , 3000)
        })
   }
 
   userLogin(authData: AuthData) {
-    this.spinnerService.loadingState.next(true)
+    this.store.dispatch({type : 'START_LOADING'})
     signInWithEmailAndPassword(this.fireAuth, authData.email, authData.password)
       .then(() => {
-        this.spinnerService.loadingState.next(false)
+        this.store.dispatch({type : 'STOP_LOADING'})
         this.authSuccessful();
         this.router.navigate(['/training']);
       })
       .catch((error) => {
-        this.spinnerService.loadingState.next(false)
+        this.store.dispatch({type : 'STOP_LOADING'})
          this.snackBarService.showSnackBar(error, null , 3000)
        })
   }

@@ -8,7 +8,9 @@ import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../auth.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { SpinnerService } from '../../shared/spinner.service.ts';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as appReducer from '../../app.reducer'
 
 @Component({
   selector: 'app-sign-up',
@@ -26,18 +28,16 @@ import { SpinnerService } from '../../shared/spinner.service.ts';
   styleUrl: './sign-up.css',
 })
 export class SignUpComponent implements OnInit {
-  isLoggedIn = false;
+  isLoggedIn$ : Observable<boolean>;
   private authService = inject(AuthService);
-  private spinnerService = inject(SpinnerService)
+  private store = inject(Store<{ui: appReducer.State}>)
   maxDate: any;
   ngOnInit() {
     this.maxDate = new Date();
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
   onSubmit(form: NgForm) {
-    this.spinnerService.loadingState.subscribe((val) => {
-      this.isLoggedIn = val
-    })
+    this.isLoggedIn$ = this.store.select(state => state.ui.isLoading)
     this.authService.userRegister({
       email: form.value.email,
       password: form.value.password,
