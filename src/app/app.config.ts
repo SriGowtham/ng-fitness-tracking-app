@@ -21,6 +21,6 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
-    provideStore({ui : appReducer})
+    provideStore(appReducer)
   ]
 };
