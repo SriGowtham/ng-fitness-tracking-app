@@ -1,10 +1,12 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, importProvidersFrom, inject, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NewTrainingComponent } from './new-training/new-training';
 import { PastTrainingComponent } from './past-training/past-training';
 import { CurrentTrainingComponent } from './current-training/current-training';
 import { TrainingService } from './training.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { provideState, provideStore } from '@ngrx/store';
+import { trainingReducer } from './training.reducer';
 
 @Component({
   selector: 'app-training',

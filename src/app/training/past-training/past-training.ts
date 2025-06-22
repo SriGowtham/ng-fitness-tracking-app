@@ -28,8 +28,8 @@ export class PastTrainingComponent implements OnInit, AfterViewInit{
   this.trainingService.fetchCompletedorCancelledExcercises()
   this.trainingService.finshedExcersisesChanged
   .pipe(takeUntilDestroyed(this.destroyRef))
-  .subscribe((excersises : Training[]) => {
-     this.matTableSource.data = excersises
+  .subscribe((exercises : Training[]) => {
+     this.matTableSource.data = exercises
   })
  }
 

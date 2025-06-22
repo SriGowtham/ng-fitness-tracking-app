@@ -1,6 +1,7 @@
 import { ActionReducerMap, createFeature, createFeatureSelector, createSelector } from '@ngrx/store'
 import * as fromUI from '../app/shared/ui.reducer'
 import * as fromAuth from '../app/auth/auth.reducer'
+import { TrainingState } from './training/training.reducer'
 
 export interface State {
   ui :  fromUI.State,

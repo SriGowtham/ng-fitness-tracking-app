@@ -27,7 +27,7 @@ export class NewTrainingComponent implements OnInit {
 
   ngOnInit(): void {
     this.trainingService.fetchAvailableExcercises();
-    this.trainingService.excersisesChanged
+    this.trainingService.exercisesChanged
     .pipe(takeUntilDestroyed(this.destoryRef))
     .subscribe((ex) => {
       this.exercises = ex

@@ -15,7 +15,7 @@ import { SnackBarService } from '../shared/snackbar.service';
 })
 export class TrainingService {
   excerciseChanged = new Subject<Training>();
-  excersisesChanged = new Subject<Training[]>();
+  exercisesChanged = new Subject<Training[]>();
   finshedExcersisesChanged = new Subject<Training[]>();
   currentExercise: Training;
   excercises: Training[] = [];
@@ -37,7 +37,7 @@ export class TrainingService {
       .subscribe({
         next: (training: Training[]) => {
         this.availableExcercises = training;
-        this.excersisesChanged.next([...this.availableExcercises]);
+        this.exercisesChanged.next([...this.availableExcercises]);
       },
        error: () => {
          this.snackBarService.showSnackBar('Failed to fetch exercise values', null, 3000);
