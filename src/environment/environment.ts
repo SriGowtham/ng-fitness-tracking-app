@@ -1,12 +1,12 @@
 export const environment = {
   production: false,
-  firebaseConfig : {
-    apiKey: 'AIzaSyDSEwIBvJn5nxRSLOPDEk6FAVAsvcX5qvQ',
-    authDomain: 'ng-fitness-tracking-62992.firebaseapp.com',
-    projectId: 'ng-fitness-tracking-62992',
-    storageBucket: 'ng-fitness-tracking-62992.firebasestorage.app',
-    messagingSenderId: '643689425001',
-    appId: '1:643689425001:web:30d135793fd06860fb1af8',
-    measurementId: 'G-S8766JVPBL',
+  firebaseConfig: {
+    apiKey: 'AIzaSyB8_CNVYrnnFrRSbXaoYJ2t7cLYxIMvUGw',
+    authDomain: 'ng-fitness-tracking-app.firebaseapp.com',
+    projectId: 'ng-fitness-tracking-app',
+    storageBucket: 'ng-fitness-tracking-app.firebasestorage.app',
+    messagingSenderId: '124395874644',
+    appId: '1:124395874644:web:7ebb2248c47bad737a40c1',
+    measurementId: 'G-9YWC2PF7V6',
   },
 };
