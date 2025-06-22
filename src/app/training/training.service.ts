@@ -7,8 +7,11 @@ import {
   collectionData,
   collectionSnapshots,
   Firestore,
+  query,
+  where,
 } from '@angular/fire/firestore';
 import { SnackBarService } from '../shared/snackbar.service';
+import { Auth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +26,7 @@ export class TrainingService {
 
   private dB = inject(Firestore);
   private snackBarService = inject(SnackBarService)
+  private auth = inject(Auth)
 
   fetchAvailableExcercises() {
     return collectionSnapshots(collection(this.dB, 'availableExcercises'))
@@ -80,7 +84,13 @@ export class TrainingService {
   }
 
  fetchCompletedorCancelledExcercises() {
-  const fetchRef = collection(this.dB, 'finishedExcercise');
+
+  const uid = this.auth.currentUser?.uid;
+  if (!uid) return;
+  const fetchRef = query(
+    collection(this.dB, 'finishedExcercise'),
+    where('userId', '==', uid)
+  );
 
   collectionData(fetchRef, { idField: 'id' }).pipe(
     map((data: any[]) =>
@@ -96,6 +106,9 @@ export class TrainingService {
 
   private addDataToDatabase(excercise: Training) {
     const finsihedExRef = collection(this.dB, 'finishedExcercise');
-    addDoc(finsihedExRef, excercise);
+    addDoc(finsihedExRef, {
+      ...excercise,
+      userId : this.auth.currentUser?.uid
+    });
   }
 }

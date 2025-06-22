@@ -4,5 +4,6 @@ export interface Training {
     duration: number,
     calories: number,
     date?: Date,
-    state?: 'completed' | 'cancelled' | null
+    state?: 'completed' | 'cancelled' | null,
+    userId?: string
 }
