@@ -1,12 +1,13 @@
-import { Component, DestroyRef, importProvidersFrom, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NewTrainingComponent } from './new-training/new-training';
 import { PastTrainingComponent } from './past-training/past-training';
 import { CurrentTrainingComponent } from './current-training/current-training';
-import { TrainingService } from './training.service';
+import { Store } from '@ngrx/store';
+import * as  fromTraining from './training.reducer';
+import { Observable } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { provideState, provideStore } from '@ngrx/store';
-import { trainingReducer } from './training.reducer';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-training',
@@ -15,20 +16,17 @@ import { trainingReducer } from './training.reducer';
     NewTrainingComponent,
     PastTrainingComponent,
     CurrentTrainingComponent,
+    AsyncPipe
   ],
   templateUrl: './training.html',
   styleUrl: './training.css',
 })
 export class TrainingComponent implements OnInit {
-  currentTraining: boolean = false;
-  private trainingService = inject(TrainingService);
+  currentTraining$: Observable<boolean>
   private destroyRef = inject(DestroyRef);
+  private store = inject(Store)
 
   ngOnInit(): void {
-    this.trainingService.excerciseChanged
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((ex) =>
-        ex ? (this.currentTraining = true) : (this.currentTraining = false)
-      );
+    this.currentTraining$ = this.store.select(fromTraining.getIsTraining).pipe(takeUntilDestroyed(this.destroyRef))
   }
 }

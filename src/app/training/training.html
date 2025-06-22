@@ -1,4 +1,4 @@
-@if (!currentTraining) {
+@if (!(currentTraining$ | async)) {
   <mat-tab-group>
     <mat-tab label="New Exercise">
       <app-new-training></app-new-training>
@@ -8,5 +8,5 @@
     </mat-tab>
   </mat-tab-group>
 } @else {
-  <app-current-training (trainingComplete)="currentTraining = false"></app-current-training>
+  <app-current-training></app-current-training>
 }

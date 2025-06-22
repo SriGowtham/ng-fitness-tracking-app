@@ -4,6 +4,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StopTrainingComponent } from './stop-training';
 import { TrainingService } from '../training.service';
+import { Store } from '@ngrx/store';
+import * as fromTraining from '../training.reducer'
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-current-training',
@@ -16,20 +19,23 @@ export class CurrentTrainingComponent implements OnInit {
   currentTraining: number = 0;
   private dialog = inject(MatDialog);
   private trainingService = inject(TrainingService)
-
+  private store = inject(Store<fromTraining.State>)
   ngOnInit() {
     this.startOrResumeTimer()
   }
 
   startOrResumeTimer(){
-    const duration = this.trainingService.getStartedExcercise().duration / 100 * 1000;
-    this.currentTraining = setInterval(() => {
-      this.progress += 1;
-      if (this.progress >= 100) {
-        this.trainingService.completeExcercise()
-        clearInterval(this.currentTraining);
-      }
-    }, duration);
+
+    this.store.select(fromTraining.getActiveExcersise).pipe(take(1)).subscribe((ex) => {
+      const duration = ex.duration / 100 * 1000;
+      this.currentTraining = setInterval(() => {
+        this.progress += 1;
+        if (this.progress >= 100) {
+          this.trainingService.completeExcercise()
+          clearInterval(this.currentTraining);
+        }
+      }, duration);
+    })
   }
 
   onClick(){

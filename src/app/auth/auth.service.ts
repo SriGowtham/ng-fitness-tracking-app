@@ -1,6 +1,5 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthData } from './modal/auth-data.modal';
-import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import {
   Auth,
